@@ -121,7 +121,7 @@ Screenshots included:
 * iperf output
   ![UI](screenshots/PerformanceTest.png)
 * Flow analysis
-  ![UI](screenshots/FlowAnalysispng)
+  ![UI](screenshots/FlowAnalysis.png)
 * pingall
   ![UI](screenshots/pingall.png)
 
