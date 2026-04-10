@@ -49,6 +49,7 @@ python3 pox.py flow_analyzer
 ### Start Mininet
 
 ```bash
+cd ~
 sudo mn --custom topo.py --topo flowtopo --controller=remote,port=6633
 ```
 
@@ -110,11 +111,19 @@ Switch 2 → Active: X, Unused: Y
 Screenshots included:
 
 * Topology setup
+  ![UI](screenshots/Topology.png)
 * Switch connection
+  ![UI](screenshots/ControllerSwitchConnection.png)
 * Allowed scenario
+  ![UI](screenshots/AllowedScenario.png)
 * Blocked scenario
+  ![UI](screenshots/BlockedScenario.png)
 * iperf output
+  ![UI](screenshots/PerformanceTest.png)
 * Flow analysis
+  ![UI](screenshots/FlowAnalysispng)
+* pingall
+  ![UI](screenshots/pingall.png)
 
 ---
 
