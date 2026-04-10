@@ -1,19 +1,23 @@
 # Computer Networks - Orange Problem
-# SDN Multi-Switch Flow Table Analyzer (Mininet + POX)
+## SDN Multi-Switch Flow Table Analyzer 
 
 ---
 
 ## Problem Statement
 
-In Software Defined Networking (SDN), switches use flow tables to decide how packets are forwarded. However, there is no direct mechanism to analyze how effectively these flow rules are used.
+In Software Defined Networking (SDN), switches maintain flow tables to control packet forwarding. However, there is no direct mechanism to monitor how effectively these flow rules are utilized.
 
-This project implements an SDN-based **Multi-Switch Flow Table Analyzer** that:
+This project aims to design and implement a system that analyzes flow tables across multiple switches and provides insights into rule usage.
 
-* Retrieves flow entries from switches
-* Displays rule usage
-* Identifies active vs unused rules
-* Dynamically monitors flow behavior
-  
+---
+
+## Expectations
+
+* Retrieve flow entries from multiple switches using OpenFlow
+* Display flow rule details including match fields and statistics
+* Identify active and unused flow rules based on packet counts
+* Dynamically update and monitor flow table usage in real time
+
 ---
 
 ## Objective
@@ -124,21 +128,34 @@ Switch 2 → Active: X, Unused: Y
 ##  Proof of Execution
 
 Screenshots included:
+### Topology Setup
 
-* Topology setup
-  ![UI](screenshots/Topology.png)
-* Switch connection
-  ![UI](screenshots/ControllerSwitchConnection.png)
-* Allowed scenario
-  ![UI](screenshots/AllowedScenario.png)
-* Blocked scenario
-  ![UI](screenshots/BlockedScenario.png)
-* iperf output
-  ![UI](screenshots/PerformanceTest.png)
-* Flow analysis
-  ![UI](screenshots/FlowAnalysis.png)
-* pingall
-  ![UI](screenshots/pingall.png)
+![Topology](screenshots/Topology.png)
+
+### Controller–Switch Connection
+
+![Switch Connection](screenshots/ControllerSwitchConnection.png)
+
+### Allowed Scenario
+
+![Allowed](screenshots/AllowedScenario.png)
+
+### Blocked Scenario
+
+![Blocked](screenshots/BlockedScenario.png)
+
+### Performance Test (iperf)
+
+![iperf](screenshots/PerformanceTest.png)
+
+### Flow Analysis
+
+![Flow](screenshots/FlowAnalysis.png)
+
+### pingall Result
+
+![Pingall](screenshots/pingall.png)
+
 
 ---
 
@@ -152,10 +169,10 @@ Screenshots included:
 
 ##  Conclusion
 
-This project successfully demonstrates an SDN-based solution that:
-* Implements dynamic flow rule installation
-* Enables real-time monitoring of flow usage
-* Provides traffic control using controller logic
+This project successfully demonstrates:
+* Dynamic flow rule installation
+* Real-time monitoring of flow usage
+* Traffic control using SDN controller logic
 
 ---
 
