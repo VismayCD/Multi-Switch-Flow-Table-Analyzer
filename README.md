@@ -1,109 +1,150 @@
-Computer Networks - Orange Problem SDN Multi-Switch Flow Table Analyzer
-(POX + Mininet)
+# Computer Networks - Orange Problem
+## SDN Multi-Switch Flow Table Analyzer 
 
-------------------------------------------------------------------------
+---
 
-Overview This project implements a Software Defined Networking (SDN)
-solution using the POX controller and Mininet emulator.
+## Problem Statement
 
-The system dynamically: - Controls network traffic - Installs flow rules
-in switches - Monitors flow table usage - Enforces a security policy by
-blocking a specific host (h1)
+In Software Defined Networking (SDN), switches maintain flow tables to control packet forwarding. However, there is no direct mechanism to monitor how effectively these flow rules are utilized.
 
-------------------------------------------------------------------------
+This project aims to design and implement a system that analyzes flow tables across multiple switches and provides insights into rule usage.
 
-Key Features - Flow table analysis across multiple switches
-- Real-time monitoring of active and unused flows
-- Traffic filtering (blocks host h1)
-- MAC learning for efficient forwarding
-- Dynamic flow rule installation
-- Performance testing using iperf
+---
 
-------------------------------------------------------------------------
+## Expectations
 
-Problem Statement In SDN, switches rely on flow tables for packet
-forwarding. However, there is limited visibility into how effectively
-these flow rules are utilized.
+* Retrieve flow entries from multiple switches using OpenFlow
+* Display flow rule details including match fields and statistics
+* Identify active and unused flow rules based on packet counts
+* Dynamically update and monitor flow table usage in real time
 
-This project provides: - Real-time insight into flow usage
-- Identification of active vs unused rules
-- Analysis of network behavior under different traffic conditions
+---
 
-------------------------------------------------------------------------
+## Objective
 
-Objectives - Demonstrate controller–switch interaction using OpenFlow
-- Implement match–action flow rules
-- Analyze flow table utilization dynamically
-- Enforce traffic control policies (blocking h1)
-- Evaluate network performance
+* Demonstrate **controller–switch interaction** using OpenFlow
+* Implement **match–action flow rules**
+* Analyze **flow table usage dynamically**
+* Demonstrate **network behavior (allowed vs blocked traffic)**
 
-------------------------------------------------------------------------
+---
 
-Tools & Technologies - Mininet – Network emulation
-- POX Controller – SDN controller
-- OpenFlow Protocol – Communication layer
-- Python – Controller implementation
-- iperf – Performance testing
+## Tools & Technologies
 
-------------------------------------------------------------------------
+* **Mininet** – Network emulation
+* **POX Controller** – SDN controller
+* **OpenFlow Protocol** – Communication between controller & switches
+* **iperf** – Performance testing
+* **Python** – Implementation
 
-Network Topology
+---
 
-h1 — s1 — s2 — s3 — h2 | | h3 h4
+## Network Topology
 
-------------------------------------------------------------------------
+```
+h1 --- s1 --- s2 --- s3 --- h2
+           |       |
+          h3      h4
+```
 
-Setup & Execution
+---
 
-1.  Start POX Controller cd ~/pox sudo ./pox.py misc.flow_analyzer
+##  Setup & Execution
 
-2.  Start Mininet (New Terminal) cd
-    ~/CN-SDN sudo mn –custom topo.py
-    –topo flowtopo –controller remote,port=6633
+### Start POX Controller 
 
-------------------------------------------------------------------------
+```bash
+cd ~/pox
+sudo ./pox.py misc.flow_analyzer
+```
 
-How It Works 1. Switch connects to controller
+### Start Mininet In Another Terminal
+
+```bash
+cd ~/CN-SDN
+sudo mn --custom topo.py --topo flowtopo --controller remote,port=6633
+```
+
+---
+
+##  OpenFlow Working
+
+1. Switch connects to controller
 2. Packet arrives at switch
-3. No matching rule → Packet sent to controller
-4. Controller learns MAC and decides action
-5. Controller installs flow rule
-6. Current packet forwarded
-7. Future packets handled by switch
-8. Controller collects flow statistics
+3. No matching rule → **Packet-In** sent to controller
+4. Controller processes packet
+5. Decision made (allow or block)
+6. Controller installs rule using **Flow-Mod**
+7. Switch forwards packets
+8. Controller periodically requests **Flow Stats**
+9. Switch replies with statistics
+10. Controller analyzes rule usage
 
-------------------------------------------------------------------------
+---
 
-Flow Rule Logic - Match: Source MAC, destination MAC, input port
-- Action: Forward / Flood / Drop
-- Counters: Packet and byte count
+##  Test Scenarios
 
-------------------------------------------------------------------------
+### Allowed Traffic
 
-Test Scenarios
+```bash
+mininet> h2 ping h3
+```
+✔ Communication successful
 
-Allowed Traffic: mininet> h2 ping h3
+### Blocked Traffic
 
-Blocked Traffic: mininet> h1 ping h2
+```bash
+mininet> h1 ping h2
+```
+✔ Communication fails (blocked by controller)
 
-Performance Test: mininet> h3 iperf -s & mininet> h2 iperf -c h3
+### Performance Test
 
-------------------------------------------------------------------------
+```bash
+mininet> h3 iperf -s &
+mininet> h2 iperf -c h3
+```
+✔ Generates high traffic for analysis
 
-Observations - First packet delay due to controller
-- Faster communication after flow installation
-- MAC learning reduces flooding
-- Blocking isolates h1
-- Flow stats show usage
+---
 
-------------------------------------------------------------------------
+##  Expected Output
 
-Conclusion This project demonstrates: - Centralized SDN control
-- Dynamic flow rule installation
-- Traffic filtering
-- Efficient forwarding
-- Real-time monitoring
+```
+Switch 1 → Active: X, Unused: Y
+Switch 2 → Active: X, Unused: Y
+```
 
-------------------------------------------------------------------------
+---
 
-Author Vismay Chandra Dev Sem 4 - J Computer Networks (SDN Project)
+##  Observations
+
+* Active flow count increases with traffic
+* Blocked traffic prevents rule installation
+* Initial packet loss occurs due to reactive flow setup
+* Flow statistics enable identification of rule utilization
+
+---
+
+
+##  References
+
+* Mininet Documentation
+* POX Controller Documentation
+* OpenFlow Specification
+
+---
+
+##  Conclusion
+
+This project successfully demonstrates:
+* Dynamic flow rule installation
+* Real-time monitoring of flow usage
+* Traffic control using SDN controller logic
+
+---
+
+## Author
+Vismay Chandra Dev
+Sem 4 - J
+Computer Networks - SDN Simulation Project (Multiswitch Flow Table Analyser)
